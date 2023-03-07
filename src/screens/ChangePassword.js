@@ -11,6 +11,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {textValidator} from '../helpers/textValidator'
 import {Picker} from '@react-native-picker/picker';
 import { theme } from '../core/theme'
+import {
+  Dropdown,
+  GroupDropdown,
+  MultiselectDropdown,
+} from 'sharingan-rn-modal-dropdown';
+
+export const datas = [
+  {
+    value: 'favorite color',
+    label: 'What is your favorite colors',
+  },
+  {
+    value: 'mother maiden name',
+    label: 'What is your mother maiden name',
+    
+  },
+];
 
 export default function ChangePassword({ navigation }) {
 
@@ -79,6 +96,10 @@ const retrieveData = async () => {
     retrieveData();
   }, []);
 
+  const onChangeSS = (value) => {
+    setSelectedValue(value);
+  };
+
   return (
       <Background>
           <TouchableOpacity onPress={() => navigation.navigate('Dashboard')} style={styles.container}>
@@ -113,17 +134,14 @@ const retrieveData = async () => {
             </Picker>
         )}
         {Platform.OS == 'ios' && (
-          <View>
-            <Picker
-              selectedValue={selectedValue}
-              placeholder="Security Questions"
-              style={styles.pickerios}
-              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            >
-              <Picker.Item label="What is your favorite color" value="favorite color" />
-              <Picker.Item label="What is your mother maiden name" value="mother maiden name" />
-            </Picker>
-          </View>
+          <View style={styles.picker}>
+          <Dropdown
+            label="Security Questions"
+            data={datas}
+            value={selectedValue}
+            onChange={onChangeSS}
+          />
+        </View>
         )}
         <TextInput
           label="Answer"

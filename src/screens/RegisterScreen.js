@@ -42,7 +42,7 @@ export default function RegisterScreen({ navigation }) {
   const [isDisabled, setIsDisabled] = useState(true);
   const [selectedValue, setSelectedValue] = useState("");
   const [text, setText] = useState({ value: '', error: '' });
-  const [valueSS, setValueSS] = useState('');
+  //const [valueSS, setValueSS] = useState('');
   
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value)
@@ -112,7 +112,7 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const onChangeSS = (value) => {
-    setValueSS(value);
+    setSelectedValue(value);
   };
 
   const validAccount = ()=>{
@@ -245,7 +245,7 @@ export default function RegisterScreen({ navigation }) {
             <Dropdown
               label="Security Questions"
               data={datas}
-              value={valueSS}
+              value={selectedValue}
               onChange={onChangeSS}
             />
           </View>

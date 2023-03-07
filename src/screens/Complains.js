@@ -4,7 +4,7 @@ import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Paragraph from '../components/Paragraph'
 import BackButton from '../components/BackButton'
-import { TouchableOpacity, Image, StyleSheet,Alert,ScrollView } from 'react-native'
+import { TouchableOpacity, Image, StyleSheet,Alert,ScrollView,Platform,View } from 'react-native'
 import TextInput from '../components/TextInput'
 import TextInputBox from '../components/TextInputBox'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
@@ -12,6 +12,19 @@ import { Picker } from '@react-native-picker/picker';
 import Button from '../components/Button'
 import { theme } from '../core/theme'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  Dropdown,
+  GroupDropdown,
+  MultiselectDropdown,
+} from 'sharingan-rn-modal-dropdown';
+
+export const datas = [
+  {
+    value: 'ZPO_SUP_NOS',
+    label: 'No Supply',
+  },
+
+];
 
 export default function Complains({ navigation }) {
 
@@ -66,6 +79,10 @@ export default function Complains({ navigation }) {
     retrieveData();
   }, []);
 
+  const onChangeSS = (value) => {
+    setSelectedValue(value);
+  };
+
 
   return (
     <ScrollView>
@@ -80,16 +97,26 @@ export default function Complains({ navigation }) {
       <Paragraph>
         Ethiopian Electric Utility.
       </Paragraph>
+      {Platform.OS == 'android' && (
       <Picker
         selectedValue={selectedValue}
-        placeholder="Security Questions"
         style={styles.picker}
         onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
       >
         <Picker.Item label="Select Complaint" value="" />
         <Picker.Item label="No Supply" value="ZPO_SUP_NOS" />
       </Picker>
-
+      )}
+      {Platform.OS == 'ios' && (
+          <View style={styles.picker}>
+            <Dropdown
+              label="Select Complaint"
+              data={datas}
+              value={selectedValue}
+              onChange={onChangeSS}
+            />
+          </View>
+        )}
       <TextInput
           label="Complaint Title"
           returnKeyType="next"
